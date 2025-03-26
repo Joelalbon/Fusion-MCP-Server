@@ -1,0 +1,4 @@
+This is a placeholder file for the resources directory.
+You should replace this with actual icon files for the Fusion 360 add-in.
+
+For the MCP icon, create a 32x32 PNG file named "MCPIcon.png" in this directory. 
