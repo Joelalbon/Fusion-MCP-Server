@@ -103,3 +103,7 @@ This project is provided as-is without any warranty. Use at your own risk.
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. 
+
+## Notes
+- Fusion 360 (2601.1.34)MCP Add-in refuses to install with errors indicating more than one file.
+    - Create a new add-in (python), edit, copy the fusion360_mcp_addin.py source to the new file, save, open the new file location and copy the client.py and resource folder to that location, restart Fusion 360.
