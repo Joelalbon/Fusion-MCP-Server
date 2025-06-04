@@ -6,6 +6,11 @@ import os
 import time
 from typing import Dict, Any, List, Optional
 
+try:
+    import openai
+except ImportError:  # pragma: no cover - optional dependency
+    openai = None
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -27,6 +32,7 @@ class MCPServer:
         self.clients: Dict[str, socket.socket] = {}
         self.fusion_data: Dict[str, Any] = {}
         self.running = False
+        self.openai_api_key = os.getenv("OPENAI_API_KEY")
     
     def start(self):
         """Start the MCP server"""
@@ -133,7 +139,17 @@ class MCPServer:
                 'type': 'model_info',
                 'data': model_info
             })
-            
+
+        elif msg_type == 'llm_request':
+            prompt = message.get('prompt', '')
+            model = message.get('model', 'gpt-3.5-turbo')
+            result = self.handle_llm_request(prompt, model)
+            self.send_response(client_id, {
+                'status': 'success' if 'error' not in result else 'error',
+                'type': 'llm_result',
+                'data': result
+            })
+
         else:
             self.send_response(client_id, {
                 'status': 'error',
@@ -177,6 +193,26 @@ class MCPServer:
                 {'id': 'comp2', 'name': 'Component 2'}
             ]
         }
+
+    def handle_llm_request(self, prompt: str, model: str) -> Dict[str, Any]:
+        """Send a prompt to an LLM and return the response"""
+        if openai is None:
+            return {'error': 'openai package not installed'}
+
+        if not self.openai_api_key:
+            return {'error': 'OPENAI_API_KEY not configured'}
+
+        try:
+            openai.api_key = self.openai_api_key
+            response = openai.ChatCompletion.create(
+                model=model,
+                messages=[{'role': 'user', 'content': prompt}]
+            )
+            content = response['choices'][0]['message']['content']
+            return {'response': content}
+        except Exception as exc:
+            logger.error(f"LLM request failed: {exc}")
+            return {'error': str(exc)}
     
     def stop(self):
         """Stop the MCP server"""

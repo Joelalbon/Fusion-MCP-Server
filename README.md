@@ -22,7 +22,12 @@ The project consists of three main components:
 
 1. Clone this repository or copy the files to your desired location.
 2. Make sure you have Python 3.6+ installed.
-3. No additional Python packages are required as the implementation uses only standard library modules.
+3. No additional Python packages are required for basic functionality as the implementation uses only standard library modules.
+4. To enable LLM features, install the optional `openai` package:
+
+   ```bash
+   pip install openai
+   ```
 
 ### Fusion 360 Add-in
 
@@ -43,7 +48,9 @@ The project consists of three main components:
 python server.py
 ```
 
-By default, the server will listen on `127.0.0.1:8080`. You can modify the host and port in the code if needed.
+By default, the server will listen on `127.0.0.1:8080`. You can modify the host
+and port in the code if needed. Set the `OPENAI_API_KEY` environment variable if
+you plan to use the LLM integration.
 
 ### Connecting Fusion 360 to the Server
 
@@ -86,6 +93,8 @@ The server and clients communicate using a simple JSON-based protocol over TCP s
 - `get_model_info`: Request information about the current model
 - `command_result`: Response containing the result of a command execution
 - `model_info`: Response containing model information
+- `llm_request`: Request text generation from the configured LLM
+- `llm_result`: Response containing LLM output
 
 ## Extension
 
