@@ -135,7 +135,17 @@ class MCPClient:
         message = {
             'type': 'get_model_info'
         }
-        
+
+        return self.send_message(message)
+
+    def send_llm_request(self, prompt: str, model: str = 'gpt-3.5-turbo') -> bool:
+        """Send a prompt to the server to be processed by an LLM"""
+        message = {
+            'type': 'llm_request',
+            'prompt': prompt,
+            'model': model
+        }
+
         return self.send_message(message)
 
 
@@ -166,11 +176,14 @@ if __name__ == "__main__":
                 'center': [0, 0, 0],
                 'radius': 10
             })
-            
+
+            # Example: LLM request
+            client.send_llm_request('Summarize the Fusion 360 model')
+
             # Keep the client running for a while to receive responses
             time.sleep(5)
-            
+
         finally:
             client.disconnect()
     else:
-        print("Failed to connect to MCP server. Make sure it's running.") 
+        print("Failed to connect to MCP server. Make sure it's running.")
