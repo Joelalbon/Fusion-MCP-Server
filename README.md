@@ -31,10 +31,10 @@ The project consists of three main components:
 
 ### Fusion 360 Add-in
 
-1. In Fusion 360, go to the "Scripts and Add-ins" dialog (press Shift+S or find it in the "Design" workspace under "Utilities").
-2. Click the "Add-ins" tab, then click the "+" icon next to "My Add-ins".
-3. Navigate to the location of the add-in files and select the folder containing `fusion360_mcp_addon.py`.
-4. Click "Run" to start the add-in, or "Run on Startup" to have it automatically load when Fusion 360 starts.
+1. Copy the entire folder containing `fusion360_mcp_addon.py`, `client.py`, `manifest.json` and the `resources` directory to your Fusion 360 **AddIns** directory. Make sure `resources/MCPIcon.png` exists as Fusion 360 requires an icon file.
+2. In Fusion 360, open the "Scripts and Add-ins" dialog (press `Shift+S` or find it in the "Design" workspace under "Utilities").
+3. On the "Add-ins" tab choose **Load from my computer** ("Load from Device" on some versions) and select this folder. Selecting the folder starts the add-in.
+4. Click "Run" or enable "Run on Startup" to have it automatically load when Fusion 360 starts.
 
 ## Usage
 
