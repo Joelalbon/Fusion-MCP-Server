@@ -188,12 +188,14 @@ def run(context):
         tbPanels = mcpWorkspace.toolbarPanels
         mcpPanel = tbPanels.add('MCPPanel', 'MCP Controls')
         
+        ### './resources/MCPIcon' is optional and unless commented out
+        ### in original code, will cause errors
         # Add the command
         controls = mcpPanel.controls
         mcpCommandDef = ui.commandDefinitions.addButtonDefinition(
             'MCPConnectionBtn', 
             'Connect to MCP Server', 
-            'Connect to the Fusion 360 Master Control Program server', 
+            'Connect to the Fusion 360 Master Control Program server',
             './resources/MCPIcon'
         )
         
@@ -207,10 +209,12 @@ def run(context):
         mcpButton.isPromoted = True
         mcpButton.isPromotedByDefault = True
         
+        ### commandExecuted.add causes errors (C++ only ?)
         # Add event handlers for Fusion 360 events
-        cmdExecutedHandler = CommandExecutedHandler()
-        app.userInterface.commandExecuted.add(cmdExecutedHandler)
-        handlers.append(cmdExecutedHandler)
+        # cmdExecutedHandler = CommandExecutedHandler()
+        # app.userInterface.commandExecuted.add(cmdExecutedHandler)
+        # mcpCommandDef. .execute. .add(cmdExecutedHandler)
+        # handlers.append(cmdExecutedHandler)
         
         docOpenedHandler = DocumentOpenedHandler()
         app.documentOpened.add(docOpenedHandler)
