@@ -62,6 +62,7 @@ class MCPClient:
     
     def receive_messages(self):
         """Receive and process messages from the server"""
+        buffer = ""
         while self.running and self.connected:
             try:
                 data = self.socket.recv(4096)
@@ -69,10 +70,14 @@ class MCPClient:
                     logger.warning("Connection to MCP server closed")
                     self.connected = False
                     break
-                
-                # Process the received data
-                response = json.loads(data.decode('utf-8'))
-                self.handle_response(response)
+
+                buffer += data.decode('utf-8')
+                while "\n" in buffer:
+                    line, buffer = buffer.split("\n", 1)
+                    if not line.strip():
+                        continue
+                    response = json.loads(line)
+                    self.handle_response(response)
                 
             except Exception as e:
                 if self.running:
@@ -108,8 +113,8 @@ class MCPClient:
             return False
             
         try:
-            data = json.dumps(message).encode('utf-8')
-            self.socket.sendall(data)
+            data = json.dumps(message) + "\n"
+            self.socket.sendall(data.encode('utf-8'))
             return True
             
         except Exception as e:
