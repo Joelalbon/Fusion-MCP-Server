@@ -86,14 +86,19 @@ class MCPServer:
         self.clients[client_id] = client_socket
         
         try:
+            buffer = ""
             while self.running:
                 data = client_socket.recv(4096)
                 if not data:
                     break
-                    
-                # Process the received data
-                message = json.loads(data.decode('utf-8'))
-                self.process_message(client_id, message)
+
+                buffer += data.decode('utf-8')
+                while "\n" in buffer:
+                    line, buffer = buffer.split("\n", 1)
+                    if not line.strip():
+                        continue
+                    message = json.loads(line)
+                    self.process_message(client_id, message)
                 
         except Exception as e:
             logger.error(f"Error handling client {client_id}: {e}")
@@ -163,8 +168,8 @@ class MCPServer:
             return
             
         try:
-            data = json.dumps(response).encode('utf-8')
-            self.clients[client_id].sendall(data)
+            data = json.dumps(response) + "\n"
+            self.clients[client_id].sendall(data.encode('utf-8'))
         except Exception as e:
             logger.error(f"Error sending response to {client_id}: {e}")
             

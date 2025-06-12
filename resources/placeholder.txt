@@ -1,4 +1,5 @@
 This is a placeholder file for the resources directory.
 You should replace this with actual icon files for the Fusion 360 add-in.
 
-For the MCP icon, create a 32x32 PNG file named "MCPIcon.png" in this directory. 
+Place the MCP icons in the `MCPIcon` subdirectory. Include at least
+`32x32-normal.png` and `16x16-normal.png` for the add-in to load correctly.

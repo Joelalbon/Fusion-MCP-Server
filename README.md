@@ -14,7 +14,7 @@ The project consists of three main components:
 
 2. **MCP Client** (`client.py`): A Python client library that connects to the MCP server and provides methods for sending commands and receiving responses.
 
-3. **Fusion 360 Add-in** (`fusion360_mcp_addon.py`): A Fusion 360 add-in that connects to the MCP server and provides the actual integration with the Fusion 360 API.
+3. **Fusion 360 Add-in** (`fusion360_mcp_addin.py`): A Fusion 360 add-in that connects to the MCP server and provides the actual integration with the Fusion 360 API.
 
 ## Installation
 
@@ -31,7 +31,7 @@ The project consists of three main components:
 
 ### Fusion 360 Add-in
 
-1. Copy the entire folder containing `fusion360_mcp_addon.py`, `client.py`, `manifest.json` and the `resources` directory to your Fusion 360 **AddIns** directory. Make sure `resources/MCPIcon.png` exists as Fusion 360 requires an icon file.
+1. Copy the entire folder containing `fusion360_mcp_addin.py`, `client.py`, and the `resources` directory to your Fusion 360 **AddIns** directory. Ensure the `resources/MCPIcon` folder contains the required icon files (`32x32-normal.png` and `16x16-normal.png`).
 2. In Fusion 360, open the "Scripts and Add-ins" dialog (press `Shift+S` or find it in the "Design" workspace under "Utilities").
 3. On the "Add-ins" tab choose **Load from my computer** ("Load from Device" on some versions) and select this folder. Selecting the folder starts the add-in.
 4. Click "Run" or enable "Run on Startup" to have it automatically load when Fusion 360 starts.
@@ -107,7 +107,7 @@ You can extend the server and add-in to support additional functionality:
 
 ## License
 
-This project is provided as-is without any warranty. Use at your own risk.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
